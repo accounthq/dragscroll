@@ -1,9 +1,9 @@
 /**
  * @fileoverview dragscroll - scroll area by dragging
  * @version 0.0.8
- * 
+ *
  * @license MIT, see http://github.com/asvd/dragscroll
- * @copyright 2015 asvd <heliosframework@gmail.com> 
+ * @copyright 2015 asvd <heliosframework@gmail.com>
  */
 
 
@@ -25,6 +25,11 @@
     var addEventListener = 'add'+EventListener;
     var removeEventListener = 'remove'+EventListener;
     var newScrollX, newScrollY;
+    var disableEventBubbling = true;
+
+    var setEventBubbling = function(enabled) {
+      disableEventBubbling = !enabled;
+    };
 
     var dragged = [];
     var reset = function(i, el) {
@@ -52,7 +57,9 @@
                             lastClientX = e.clientX;
                             lastClientY = e.clientY;
 
-                            e.preventDefault();
+                            if (disableEventBubbling) {
+                              e.preventDefault();
+                            }
                         }
                     }, 0
                 );
@@ -80,7 +87,7 @@
         }
     }
 
-      
+
     if (_document.readyState == 'complete') {
         reset();
     } else {
@@ -88,5 +95,5 @@
     }
 
     exports.reset = reset;
+    exports.setEventBubbling = setEventBubbling;
 }));
-
